@@ -3,52 +3,50 @@ public class QueenBoard{
     
     public QueenBoard(int size){
 		board = new int[size][size];
-	}
-    
-    private boolean addQueen(int r,int c){
-        if (board[r][c] == 0){
-	    	board[r][c] = -1;
-	    	int x = c + 1;
-	    	for (int i = r - 1; (i > 0) && ((c+1) < board.length); i--){
-	    		board[i][c+1] ++;
-	    		x ++;
-	    	}
-	    	for (int i = r +1; i < board.length && ((c + 1) < board.length); i ++){
-	    		board[i][c+1] ++;
-	    		x ++;
-	    	}
-	    	for (int i = c + 1; i < board.length; i++){
-	    		board[r][i] ++;
-	    	}
-	    	
-	    	return true;  	
-	}
-	return false;
+	 	for (int r = 0; r < size; r++) {
+            for (int c = 0; c < size; c++) {
+                board[r][c] = 0;
+            }
+        }
+    }
+
+    private boolean addQueen(int row, int col){
+    	if (board[row][col] == 0) {
+	    board[row][col] --;
+        for(int i = col; i < board.length; i++){
+            board[row][i] += 1;
+        }
+        for(int i = col, j = row; i < board.length && j < board.length; i++, j++){
+            board[j][i] += 1;
+        }
+        for(int i = col, j = row; i < board.length && j >= 0; i++, j--){
+            board[j][i] += 1;
+        }
+        board[row][col] = -1;
+        return true;
+        }
+        return false;
     }
     
-    private boolean removeQueen(int r,int c){
-		if (board[r][c] != -1){
-	    	board[r][c] = 0;
-	    int x = c + 1;
-		for (int i = r - 1; (i > 0) && ((c+1) < board.length); i--){
-	    		board[i][c+1] --;
-	    		x ++;
-	    	}
-	    	for (int i = r +1; (i < board.length) && ((c + 1) < board.length); i ++){
-	    		board[i][c+1] --;
-	    		x ++;
-	    	}
-	    	for (int i = c + 1; i < board.length; i++){
-	    		board[r][i] --;
-	    	}
-		
-		return true;
-    	}
-    	return false;
+    private boolean removeQueen(int row, int col){
+    	if (board[row][col] == -1) {
+	    board[row][col] ++;
+        for(int i = col; i < board.length; i++){
+            board[row][i] -= 1;
+        }
+        for(int i = col, j = row; i < board.length && j < board.length; i++, j++){
+            board[j][i] -= 1;
+        }
+        for(int i = col, j = row; i < board.length && j >= 0; i++, j--){
+            board[j][i] -= 1;
+        }
+        board[row][col] = 0;
+        return true;
+        }
+        return false;
     }
-	
-    	
-    public String toString(){
+    
+	public String toString(){
 		String str = "";
 		for (int i = 0;i<board.length;i++){
 	    	for (int j = 0;j<board.length;j++){
@@ -58,7 +56,7 @@ public class QueenBoard{
 		    	str += " _";
 			}
 	    	}
-	    	str += "/n";
+	    	str += "\n";
 		}
 		return str;
     }
@@ -120,7 +118,7 @@ public class QueenBoard{
     }
     
 
+
 }
 
 
-    

@@ -46,7 +46,7 @@ public class QueenBoard{
         return false;
     }
     
-    public String toString(){
+	public String toString(){
 		String str = "";
 		for (int i = 0;i<board.length;i++){
 	    	for (int j = 0;j<board.length;j++){
@@ -60,33 +60,35 @@ public class QueenBoard{
 		}
 		return str;
     }
-	  
-    public boolean solve() {
-        for (int row = 0; row < board.length; row++) {
-            for (int col = 0; col < board[row].length; col++) {
-                if (board[row][col] != 0) {
-                    throw new IllegalStateException();
-                }
-            }
-        }
-        return solver(0);
+	public boolean solve(){
+		for(int x = 0; x < board.length; x++) {
+	    	for(int y = 0; y < board[x].length; y++) {
+			if(board[x][y] != 0) {
+		    	throw new IllegalStateException();
+		}
+	    }
+	}
+	return solver(0);
     }
     
-    private boolean solver(int row) {
-        if (row == board.length) {
-            return true;
-        }
-        for (int col = 0; col < board.length; col++) {
-            if (addQueen(row, col)) {
-                if (solver(row+1)) {
-                    return true;
-                }
-            }
-            removeQueen(row, col);
-        }
-        return false;
+    
+    
+    public boolean solver(int col) {
+	if(col >= board.length) {
+	   return true;
+	}
+	for(int x = 0; x < board.length; x++) {
+	    if(addQueen(x, col)) {
+		if(solver(col+1)) {
+		    return true;
+		}
+		else {
+		    removeQueen(x, col);
+		}
+	    }
+	}
+	return false;
     }
-
     
     
     public int countSolutions() {
@@ -115,6 +117,9 @@ public class QueenBoard{
 		return total;
     }
     
+
+
+
 // Crystal's Driver
     public static void main(String[]args){
 

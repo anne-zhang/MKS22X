@@ -73,8 +73,7 @@ public class KnightBoard{
 
   public int countHelp(int row, int col, int level){
     int sol = 0;
-    int[][] coordinates = {{2,1},{1,2},{-2,1},{-1,2},
-                           {2,-1},{1,-2},{-1,-2},{-2,-1}};
+    int[][] coordinates = {{2,1},{1,2},{-2,1},{-1,2},{2,-1},{1,-2},{-1,-2},{-2,-1}};
     if (level == board.length * board[0].length){
       return 1;
     }

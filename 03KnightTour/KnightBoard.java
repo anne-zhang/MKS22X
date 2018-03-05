@@ -1,21 +1,15 @@
 public class KnightBoard{
     private int[][] board;
+    private int rows;
+    private int cols;
     
     public KnightBoard(int startingRows, int startingCols){
         board = new int[startingCols][startingRows];
         if(startingRows < 0 || startingCols < 0){
 	    	throw new IllegalArgumentException();
 		}
-		//clear();
     }
     
-    /*public void clear(){
-    	for(int row = 0; row < board.length; row++){
-    		for(int col = 0; col < board.length; col++){
-    			board[row][col] = 0;
-    		}
-    	}
-    }*/
 	public boolean solve(int startingRow, int startingCol){
 	if (startingRow >= board.length || startingRow < 0){
 	    throw new IllegalArgumentException("Not a valid row");
@@ -61,19 +55,57 @@ public class KnightBoard{
 
 	}
     
-    public String toString(){
-        String str = "";
-        for(int i = 0; i < board.length; i++){
-            for(int k = 0; k < board.length; k++){
-                str = str + board[k][i] + " ";
-            }
-            str +="\n";
+     public int countSolutions(int startingRow, int startingCol){
+    for (int i = 0; i < board.length; i++){
+      for (int j = 0; j < board[i].length; j++){
+        if (board[i][j] != 0){
+          throw new IllegalStateException();
         }
-        return str;
+      }
     }
-    public static void main(String[] args){
-	KnightBoard k = new KnightBoard(5, 5);
-	System.out.println(k.solve(0,0));
-	System.out.println(k);
+
+    if (startingRow < 0 || startingCol < 0){
+      throw new IllegalArgumentException();
     }
+    return countHelp(startingRow, startingCol, 1);
+
+  }
+
+  public int countHelp(int row, int col, int level){
+    int sol = 0;
+    int[][] coordinates = {{2,1},{1,2},{-2,1},{-1,2},
+                           {2,-1},{1,-2},{-1,-2},{-2,-1}};
+    if (level == board.length * board[0].length){
+      return 1;
+    }
+    for(int[] x: coordinates){
+      if(row + x[0] < board.length && row + x[0] >= 0 &&
+         col + x[1] < board[0].length && col + x[1] >= 0){
+        if (board[row + x[0]][col + x[1]] == 0){
+          board[row][col] = level;
+          sol += countHelp(row + x[0], col + x[1], level + 1);
+          board[row][col] = 0;
+          }
+      }
+    }
+    return sol;
+  }
+  
+  public String toString(){
+    String result = "";
+    for(int i = 0; i < board.length; i++){
+	    for(int j = 0; j < board[i].length; j++){
+        if(board[i][j] == 0){
+          result += "  -";
+        } else
+          if(board[i][j] < 10){
+            result += "  " + board[i][j];
+          }else{
+            result += " " + board[i][j];
+          }
+	    }
+	    result += "\n";
+    }
+    return result;
+	}
 }

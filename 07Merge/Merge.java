@@ -6,17 +6,58 @@ public class Merge{
 	}
 	
 	public static void mergeSort(int[] data, int[] temp, int start, int end){
-		if (start < end){
+		if (start >= end){
+			return ;
+		}
+		
+		if (end - start <= 20){
+			insertionSort(data, start, end);
+		}
+		
+		else{
+			for (int i = start; i <= end; i++){
+				temp[i] = data[i];
+			}
+			
 			int mid = (start + end)/2;
 			mergeSort(data, temp, start, mid);
 			mergeSort(data, temp, mid + 1, end);
-			merge( )
+			merge(data, temp, start, mid, end);
 		}
 	}
-	public static void merge(){
-	}
+    public static void merge(int[] data, int[] temp, int start, int mid, int end){
+		int newmid = mid+1;
+		int count = start;
 	
-	public static void insertionSort(int[] data) {
+
+		while(start <= mid && newmid <= end){
+
+	    	if (temp[start] <= temp[newmid]){
+				data[count] = temp[start];
+				start++;
+	    	}
+	    	else{
+				data[count] = temp[newmid];
+				newmid++;
+	    	}
+	    	count++;
+		}
+
+		while (start <= mid){
+	    	data[count] = temp[start];
+	    	start++;
+	    	count++;
+		}
+
+		while (newmid <= end){
+	    	data[count] = temp[newmid];
+	    	newmid++;
+	    	count++;
+		}	
+
+    }
+	
+	public static void insertionSort(int[] data, int start, int end) {
 	for (int x = 0; x < data.length - 1; x++) {
 	    for (int i = x + 1; i > 0; i--) {
 		if (data[i] < data[i - 1]) {

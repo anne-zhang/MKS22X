@@ -5,23 +5,29 @@ public class ExpressionTree{
   /*return the expression as an infix notation string with parenthesis*/
   /* The sample tree would be: "(3 + (2 * 10))"     */
   public String toString(){
-    /*you are to write this method*/
-    return "";
+    if (isValue()){
+    	return "" + getValue();
+    }
+    return "(" + getLeft().toString() + " " + getOp() + " " + getRight().toString() + " )";
   }
   
   /*return the expression as a postfix notation string without parenthesis*/
   /* The sample tree would be: "3 2 10 * +"     */
   public String toStringPostfix(){
-    /*you are to write this method*/
-    return "";
+    if (isValue()) {
+	    return "" + getValue();
+	}
+	return getLeft().toStringPostfix() + " " + getRight().toStringPostfix() + " " + getOp();
   }
   
   /*return the expression as a prefix notation string without parenthesis*/
   /* The sample tree would be: "+ 3 * 2 10"     */
   
   public String toStringPrefix(){
-    /*you are to write this method*/
-    return "";
+    if (isValue()) {
+	    return "" + getValue();
+	}
+	return getOp() + " " + getLeft().toStringPrefix() + " " + getRight().toStringPrefix();
   }
   
   
@@ -45,8 +51,19 @@ public class ExpressionTree{
 
   /*use the correct operator on both a and b, and return that value*/
   private double apply(char op, double a, double b){
-    /*you are to write this method*/
-      return 0.0;
+	if (op == '+') {
+	    return a + b;
+	}
+	if (op == '-') {
+	    return a - b;
+	}
+	if (op == '*') {
+	    return a * b;
+	}
+	if (op == '/') {
+	    return a / b;
+	}
+	return 0;
 
     }
 

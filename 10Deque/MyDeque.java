@@ -128,7 +128,7 @@ public class MyDeque<E> {
 		return data[end];
     }
     
-    /*public String toString() {
+    public String toString() {
         String result = "[";
 
         if (size == 0) {
@@ -153,7 +153,7 @@ public class MyDeque<E> {
 
         result = result.substring(0, result.length() - 2) + "]";
         return result;
-    } */
+    } 
     
 
 }

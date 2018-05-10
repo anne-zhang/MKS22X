@@ -1,11 +1,11 @@
 public class Merge{
 
-	public static void mergeSort(int[] data){
+	public static void mergesort(int[] data){
 		int[] temp = new int[data.length];
-		mergeSort(data, temp, 0, data.length - 1);
+		mergesort(data, temp, 0, data.length - 1);
 	}
 	
-	public static void mergeSort(int[] data, int[] temp, int start, int end){
+	public static void mergesort(int[] data, int[] temp, int start, int end){
 		if (start >= end){
 			return ;
 		}
@@ -20,8 +20,8 @@ public class Merge{
 			}
 			
 			int mid = (start + end)/2;
-			mergeSort(data, temp, start, mid);
-			mergeSort(data, temp, mid + 1, end);
+			mergesort(data, temp, start, mid);
+			mergesort(data, temp, mid + 1, end);
 			merge(data, temp, start, mid, end);
 		}
 	}

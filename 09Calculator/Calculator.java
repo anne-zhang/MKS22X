@@ -2,49 +2,37 @@ import java.util.*;
 public class Calculator{
 
 	public static double eval(String n){
-		LinkedList<String> Stack = new LinkedList<>();
+		LinkedList<Double> Stack = new LinkedList<>();
 		String[] splitN = n.split(" ");
-		double finalAns = 0;
 		
 		for (int i = 0; i < splitN.length; i++){
-			double numOne = 0 ;
-			double numTwo = 0;
 			
 				if(splitN[i].equals("+")){
-					numOne = Double.parseDouble(Stack.pop());
-					numTwo = Double.parseDouble(Stack.pop());
-					finalAns = numOne + numTwo;
-					Stack.push(finalAns + "");
+					double numOne = Stack.pop();
+					double numTwo = Stack.pop();
+					Stack.push(numOne + numTwo);
 				}
 				else if(splitN[i].equals("-")){
-					numOne = Double.parseDouble(Stack.pop());
-					numTwo = Double.parseDouble(Stack.pop());
-					finalAns = numOne - numTwo;
-					Stack.push(finalAns + "");
-				}
-				else if(splitN[i].equals("/")){
-					numOne = Double.parseDouble(Stack.pop());
-					numTwo = Double.parseDouble(Stack.pop());
-					finalAns = numOne / numTwo;
-					Stack.push(finalAns + "");
+					double numOne = Stack.pop();
+					double numTwo = Stack.pop();
+					Stack.push(numTwo - numOne);
 				}
 				else if(splitN[i].equals("*")){
-					numOne = Double.parseDouble(Stack.pop());
-					numTwo = Double.parseDouble(Stack.pop());
-					finalAns = numOne * numTwo;
-					Stack.push(finalAns + "");
+					double numOne = Stack.pop();
+					double numTwo = Stack.pop();
+					Stack.push(numOne * numTwo);
+				}
+				else if(splitN[i].equals("/")){
+					Stack.push(Stack.pop() / i);
 				}
 				else if(splitN[i].equals("%")){
-					numOne = Double.parseDouble(Stack.pop());
-					numTwo = Double.parseDouble(Stack.pop());
-					finalAns = numOne % numTwo;
-					Stack.push(finalAns + "");
+					Stack.push(Stack.pop() % i);
 				}
 				else{
-					Stack.push(splitN[i]);
+					Stack.push(Double.parseDouble(splitN[i]));
 				}
 			}
-			return finalAns;
+			return Stack.pop();
 		}	
 
 }

@@ -20,45 +20,30 @@ public class USACO {
 	    	}
 		}
 
-		int[] doIt = new int[3];
-		int i = 0;
-		while (i < moves) {
-
-	    	int max = 0;
-	    	int tracker = 0;
-	    
-	    	for (int x = 0; x < 3; x++) {
-			doIt[x] = scan.nextInt();
-	    	}
-	    	
-	    	for (int x = doIt[0] - 1; x < doIt[0] + 2; x++){
-			for (int y = doIt[1] - 1; y < doIt[1] + 2; y++) {
-		    	if (lake[x][y] == max) {
-				lake[x][y] = lake[x][y] - doIt[2];
-				tracker = lake[x][y];
-		    	}
+		for (int index = 0; index < moves; index++){
+		int R = scan.nextInt() - 1;
+		int C = scan.nextInt() - 1;
+		int F = scan.nextInt();
+		for (int counter = 0; counter < F; counter++){
+		
+		    int max = 0;
+		    for (int rows = 0; rows < 3; rows++){
+			for (int cols = 0; cols < 3; cols++){
+			    if (lake[R + rows][C + cols] > max){
+				max = lake[R + rows][C + cols];
+			    }
 			}
-	    	}
+		    }
 
-	    	for (int x = doIt[0] - 1; x < doIt[0] + 2; x++){
-			for (int y = doIt[1] - 1; y < doIt[1] + 2; y++) {
-		    	if (lake[x][y] > max) {
-				max = lake[x][y];
-		    	}
+		    for (int rows = 0; rows < 3; rows++){
+			for (int cols = 0; cols < 3; cols++){
+			    if (lake[R + rows][C + cols] == max){
+				lake[R + rows][C + cols]--;
+			    }
 			}
-	    	}
-
-	    	for (int x = doIt[0] - 1; x < doIt[0] + 2; x++){
-			for (int y = doIt[1] - 1; y < doIt[1] + 2; y++) {
-		    	if (lake[x][y] > tracker) {
-				lake[x][y] = tracker;
-		    	}
-			}
-	    	}
-
-	    	i = i + 1;
+		    }
 		}
-
+	    }
 		int depth = 0;
 		for (int x = 0; x < row; x++) {
 	    	for (int y = 0; y < col; y++) {
@@ -132,4 +117,7 @@ public class USACO {
 	    
 	return 0;
     }
+    
+ 
 }
+

@@ -1,30 +1,21 @@
+import java.util.Arrays;
 public class Merge{
 
 	public static void mergesort(int[] data){
 		int[] temp = new int[data.length];
-		mergesort(data, temp, 0, data.length - 1);
+		msort(data, temp, 0, data.length - 1);
 	}
 	
-	public static void mergesort(int[] data, int[] temp, int start, int end){
+	public static void msort(int[] data, int[] temp, int start, int end){
 		if (start >= end){
 			return ;
 		}
-		
-		if (end - start <= 20){
-			insertionSort(data, start, end);
-		}
-		
-		else{
-			for (int i = start; i <= end; i++){
-				temp[i] = data[i];
-			}
 			
 			int mid = (start + end)/2;
-			mergesort(data, temp, start, mid);
-			mergesort(data, temp, mid + 1, end);
+			msort(data, temp, start, mid);
+			msort(data, temp, mid + 1, end);
 			merge(data, temp, start, mid, end);
 		}
-	}
     public static void merge(int[] data, int[] temp, int start, int mid, int end){
 		int newmid = mid+1;
 		int count = start;
@@ -68,4 +59,5 @@ public class Merge{
 	    }
 	}
     }
+    
 }

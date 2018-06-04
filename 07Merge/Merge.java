@@ -3,17 +3,21 @@ public class Merge{
 
 	public static void mergesort(int[] data){
 		int[] temp = new int[data.length];
+		for(int i = 0; i < data.length; i++){
+			temp[i] = data[i];
+		}
 		msort(data, temp, 0, data.length - 1);
 	}
 	
 	public static void msort(int[] data, int[] temp, int start, int end){
-		if (start >= end){
-			return ;
+		if (end - start < 2){
+			insertionSort(temp, start, end);
+			return;
 		}
 			
 			int mid = (start + end)/2;
-			msort(data, temp, start, mid);
-			msort(data, temp, mid + 1, end);
+			msort(temp, data, start, (start+end)/2);
+			msort(data, temp, (start+end)/2+1, end);
 			merge(data, temp, start, mid, end);
 		}
     public static void merge(int[] data, int[] temp, int start, int mid, int end){
@@ -21,32 +25,36 @@ public class Merge{
 		int count = start;
 	
 
-		while(start <= mid && newmid <= end){
+		for (int i = start; i <= end; i++) {
+			if (count > mid) {
+				temp[i] = data[newmid];
+				newmid+=1;
+			}
+			
+			else if (newmid <= end) {
 
-	    	if (temp[start] <= temp[newmid]){
-				data[count] = temp[start];
-				start++;
-	    	}
-	    	else{
-				data[count] = temp[newmid];
-				newmid++;
-	    	}
-	    	count++;
+			    if (data[count] < data[newmid]) {
+					temp[i] = data[count];
+					count+=1;
+			    }
+			    else {
+				temp[i] = data[newmid];
+				newmid+=1;
+			    }
+			}
+			
+			else {
+			    temp[i] = data[count];
+			    count +=1;
+			}
+
 		}
 
-		while (start <= mid){
-	    	data[count] = temp[start];
-	    	start++;
-	    	count++;
+		for (int i = start; i <= end; i++) {
+			data[i] = temp[i];
 		}
 
-		while (newmid <= end){
-	    	data[count] = temp[newmid];
-	    	newmid++;
-	    	count++;
-		}	
-
-    }
+	}
 	
 	public static void insertionSort(int[] data, int start, int end) {
 	for (int x = 0; x < data.length - 1; x++) {

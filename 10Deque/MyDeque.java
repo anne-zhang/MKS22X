@@ -22,6 +22,8 @@ public class MyDeque<E> {
 
 		data = (E[]) new Object[initialCapacity];
 		size = 0;
+		start = 0;
+		end = 0;
     }
 
     public int size(){
@@ -40,52 +42,40 @@ public class MyDeque<E> {
     }
 
     public void addFirst(E element){
-
-		if (element == null){
-	    	throw new NullPointerException();
-		}
-		if (size() == data.length || end == start - 1){
-	    	resize();
-		}
-		if (start == 0){
-	    	if (data[start] == null){
-			data[start] = element;
-	    	}
-	    	else {
-			data[data.length - 1] = element;
-			start = data.length - 1;
-	    	}
-		}
-		else {
-	    	data[start - 1] = element;
-	    	start = start - 1;
-		}
-		size = size + 1;
+		if (element == null) {
+            throw new NullPointerException();
+        }
+        if (start == end) {
+            resize();
+        }
+        start--;
+        if (start < 0) {
+            start+= data.length;
+        }
+        data[start] = element;
+        size++;	
     }
 
     public void addLast(E element){
-
-		if (element == null){
-	    	throw new NullPointerException();
-		}
-		if (size() == data.length || start == end + 1 ||
-	    	end == start + 1){
-	    	resize();
-		}
-    	if (size() == 0) {
-	    	data[0] = element;
-	    	start = 0;
-	    	end = 0;
-		} 
-		else if (end == data.length - 1) { 
-	    	end = 0;
-	    	data[end] = element;
-		} 
-		else { 
-	    	end ++;
-	    data[end] = element;
-	}
-        size ++;
+		
+	     if(element == null){
+	        throw new NullPointerException();
+	       }
+      if(size == data.length || start - 1 == end) {
+  	         resize();
+  	     }
+      if(size == 0){
+        data[end] = element;
+      }
+      else if(end == data.length - 1){
+           data[0] = element;
+           end = 0;
+         }
+       else{
+         data[end + 1] = element;
+	        end++;
+        }
+        size+= 1;
     }
     
     public E removeFirst(){
@@ -95,65 +85,62 @@ public class MyDeque<E> {
 		E element = data[start];
 		data[start] = null;
 		start ++;
+		if (start >= data.length) {
+            start -= data.length;
+        }
+        size--;
 		return element;
 	
     }
 
     public E removeLast(){
-		E ans = data[end];
-		if (size() == 0){
-	    	throw new NoSuchElementException();
-		}
-		if (end == 0){
-	    	end = data.length - 1;
-		}
-		else {
-	    	end = end - 1;
-		}
-		size = size - 1;
-		return ans;
+    	E ans = data[end];
+		if (start == end) {
+            throw new NoSuchElementException();
+        }
+        end--;
+        data[end] = null;
+        if (end < 0) {
+            end += data.length;
+        }
+        size--;
+        return ans;
+
     }
 
     public E getFirst(){
-		if (size() == 0){
-	    	throw new NoSuchElementException();
-		}
 		return data[start];
     }
 
     public E getLast(){
-		if (size() == 0){
-	    	throw new NoSuchElementException();
-		}
-		return data[end];
+    	int i = end --;
+    	if (i < 0){
+    		i += data.length;
+    	}
+		return data[i];
     }
     
     public String toString() {
-        String result = "[";
-
-        if (size == 0) {
-            return result + "]";
+        String string = "[";
+        for (E element : data) {
+            string += element + ",";
         }
+        return string.substring(0, string.length()-1) + "]";
+    }
 
-        else if (start <= end) {
-            for (int x = start; x <= end; x++) {
-		result += data[x] + ", ";
-            }
+    public static void main(String[] args) {
+        MyDeque<Integer> a = new MyDeque<Integer>(2);
+
+        int[] nums = {0,1,2,3,4};
+
+        for (Integer num : nums) {
+            a.addFirst(num);
+            a.addLast(num);
+            System.out.println(a);
         }
-
-        else {
-            for (int x = start; x < data.length; x++) {
-		result += data[x] + ", ";
-            }
-
-            for (int x = 0; x <= end; x++) {
-		result += data[x] + ", ";
-            }
-        }
-
-        result = result.substring(0, result.length() - 2) + "]";
-        return result;
-    } 
+        a.addFirst(10);
+        System.out.println(a);
+    }
     
 
 }
